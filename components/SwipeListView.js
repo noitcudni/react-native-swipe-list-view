@@ -54,6 +54,12 @@ class SwipeListView extends Component {
 		this.props.onRowOpen && this.props.onRowOpen(rowData, secId, rowId, rowMap);
 	}
 
+	onRowClose(rowData, secId, rowId, rowMap) {
+		const cellIdentifier = `${secId}${rowId}`;
+		this.openCellId = null;
+		this.props.onRowClose && this.props.onRowClose(rowData, secId, rowId, rowMap);
+	}
+
 	onRowPress(id) {
 		if (this.openCellId) {
 			if (this.props.closeOnRowPress) {
@@ -88,7 +94,7 @@ class SwipeListView extends Component {
 					ref: row => this._rows[`${secId}${rowId}`] = row,
 					onRowOpen: _ => this.onRowOpen(rowData, secId, rowId, this._rows),
 					onRowDidOpen: _ => this.props.onRowDidOpen && this.props.onRowDidOpen(rowData, secId, rowId, this._rows),
-					onRowClose: _ => this.props.onRowClose && this.props.onRowClose(rowData, secId, rowId, this._rows),
+          onRowClose: _ => this.onRowClose(rowData, secId, rowId, this._rows),
 					onRowDidClose: _ => this.props.onRowDidClose && this.props.onRowDidClose(rowData, secId, rowId, this._rows),
 					onRowPress: _ => this.onRowPress(`${secId}${rowId}`),
 					setScrollEnabled: enable => this.setScrollEnabled(enable),
