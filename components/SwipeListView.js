@@ -45,13 +45,13 @@ class SwipeListView extends Component {
 
 	}
 
-	onRowOpen(secId, rowId, rowMap) {
+	onRowOpen(rowData, secId, rowId, rowMap) {
 		const cellIdentifier = `${secId}${rowId}`;
 		if (this.openCellId && this.openCellId !== cellIdentifier) {
 			this.safeCloseOpenRow();
 		}
 		this.openCellId = cellIdentifier;
-		this.props.onRowOpen && this.props.onRowOpen(secId, rowId, rowMap);
+		this.props.onRowOpen && this.props.onRowOpen(rowData, secId, rowId, rowMap);
 	}
 
 	onRowPress(id) {
@@ -86,10 +86,10 @@ class SwipeListView extends Component {
 				{
 					...Component.props,
 					ref: row => this._rows[`${secId}${rowId}`] = row,
-					onRowOpen: _ => this.onRowOpen(secId, rowId, this._rows),
-					onRowDidOpen: _ => this.props.onRowDidOpen && this.props.onRowDidOpen(secId, rowId, this._rows),
-					onRowClose: _ => this.props.onRowClose && this.props.onRowClose(secId, rowId, this._rows),
-					onRowDidClose: _ => this.props.onRowDidClose && this.props.onRowDidClose(secId, rowId, this._rows),
+					onRowOpen: _ => this.onRowOpen(rowData, secId, rowId, this._rows),
+					onRowDidOpen: _ => this.props.onRowDidOpen && this.props.onRowDidOpen(rowData, secId, rowId, this._rows),
+					onRowClose: _ => this.props.onRowClose && this.props.onRowClose(rowData, secId, rowId, this._rows),
+					onRowDidClose: _ => this.props.onRowDidClose && this.props.onRowDidClose(rowData, secId, rowId, this._rows),
 					onRowPress: _ => this.onRowPress(`${secId}${rowId}`),
 					setScrollEnabled: enable => this.setScrollEnabled(enable),
 					swipeGestureBegan: _ => this.rowSwipeGestureBegan(`${secId}${rowId}`)
@@ -101,10 +101,10 @@ class SwipeListView extends Component {
 				<SwipeRow
 					ref={row => this._rows[`${secId}${rowId}`] = row}
 					swipeGestureBegan={ _ => this.rowSwipeGestureBegan(`${secId}${rowId}`) }
-					onRowOpen={ _ => this.onRowOpen(secId, rowId, this._rows) }
-					onRowDidOpen={ _ => this.props.onRowDidOpen && this.props.onRowDidOpen(secId, rowId, this._rows)}
-					onRowClose={ _ => this.props.onRowClose && this.props.onRowClose(secId, rowId, this._rows) }
-					onRowDidClose={ _ => this.props.onRowDidClose && this.props.onRowDidClose(secId, rowId, this._rows) }
+				  onRowOpen={ _ => this.onRowOpen(rowData, secId, rowId, this._rows) }
+				  onRowDidOpen={ _ => this.props.onRowDidOpen && this.props.onRowDidOpen(rowData, secId, rowId, this._rows)}
+				  onRowClose={ _ => this.props.onRowClose && this.props.onRowClose(rowData, secId, rowId, this._rows) }
+				  onRowDidClose={ _ => this.props.onRowDidClose && this.props.onRowDidClose(rowData, secId, rowId, this._rows) }
 					onRowPress={ _ => this.onRowPress(`${secId}${rowId}`) }
 					setScrollEnabled={ (enable) => this.setScrollEnabled(enable) }
 					leftOpenValue={this.props.leftOpenValue}
