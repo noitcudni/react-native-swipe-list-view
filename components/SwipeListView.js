@@ -55,6 +55,12 @@ class SwipeListView extends Component {
 		this.props.onRowOpen && this.props.onRowOpen(secId, rowId, rowMap);
 	}
 
+	onRowClose(rowData, secId, rowId, rowMap) {
+		const cellIdentifier = `${secId}${rowId}`;
+		this.openCellId = null;
+		this.props.onRowClose && this.props.onRowClose(rowData, secId, rowId, rowMap);
+	}
+
 	onRowPress(id) {
 		if (this.openCellId) {
 			if (this.props.closeOnRowPress) {
