@@ -144,17 +144,38 @@ class SwipeRow extends Component {
 		// finish up the animation
 		let toValue = 0;
 		if (this._translateX._value >= 0) {
-			// trying to open right
-			if (this._translateX._value > this.props.leftOpenValue * (this.props.swipeToOpenPercent/100)) {
-				// we're more than halfway
-				toValue = this.props.leftOpenValue;
-			}
+			// trying to swipe right
+
+      if (this.swipeInitialX < this._translateX._value) {
+        if (this._translateX._value > this.props.leftOpenValue * (this.props.swipeToOpenPercent/100)) {
+          // we're more than halfway
+          toValue = this.props.leftOpenValue;
+        } else {
+          toValue = 0;
+        }
+      } else {
+        if (this._translateX._value < this.props.leftOpenValue * (1 - (this.props.swipeToOpenPercent/100))) {
+          toValue = 0;
+        } else {
+          toValue = this.props.leftOpenValue;
+        }
+      }
 		} else {
-			// trying to open left
-			if (this._translateX._value < this.props.rightOpenValue * (this.props.swipeToOpenPercent/100)) {
-				// we're more than halfway
-				toValue = this.props.rightOpenValue
-			}
+			// trying to swipe left
+      if (this.swipeInitialX > this._translateX._value) {
+        if (this._translateX._value < this.props.rightOpenValue * (this.props.swipeToOpenPercent/100)) {
+          // we're more than halfway
+          toValue = this.props.rightOpenValue;
+			  } else {
+          toValue = 0;
+        }
+      } else {
+        if (this._translateX._value > this.props.rightOpenValue * (1 - (this.props.swipeToClosePercent/100))) {
+          toValue = 0;
+        } else {
+          toValue = this.props.rightOpenValue;
+        }
+      }
 		}
 
 		this.manuallySwipeRow(toValue);
@@ -383,6 +404,12 @@ SwipeRow.propTypes = {
 	 * past to trigger the row opening.
 	 */
 	swipeToOpenPercent: PropTypes.number,
+	/**
+	 * What % of the left/right openValue does the user need to swipe
+	 * past to trigger the row closing.
+	 */
+	swipeToClosePercent: PropTypes.number
+
 };
 
 SwipeRow.defaultProps = {
@@ -395,7 +422,8 @@ SwipeRow.defaultProps = {
 	preview: false,
 	previewDuration: 300,
 	directionalDistanceChangeThreshold: 2,
-	swipeToOpenPercent: 50
+	swipeToOpenPercent: 50,
+  swipeToClosePercent: 50
 };
 
 export default SwipeRow;
