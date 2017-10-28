@@ -44,7 +44,6 @@ class SwipeListView extends Component {
 		if (this.props.swipeGestureBegan) {
 			this.props.swipeGestureBegan(id);
 		}
-
 	}
 
 	onRowOpen(secId, rowId, rowMap) {
@@ -210,6 +209,10 @@ SwipeListView.propTypes = {
 	 * One case is a SwipeListView with rows of different heights and an options to delete rows.
 	 */
 	recalculateHiddenLayout: PropTypes.bool,
+	/**
+	 * Called when a swipe row is animating swipe
+	 */
+	swipeGestureBegan: PropTypes.func,
 	/**
 	 * Called when a swipe row is animating open
 	 */
